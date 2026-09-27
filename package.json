@@ -1,0 +1,18 @@
+{
+  "name": "wxgroupinsight",
+  "version": "0.1.0",
+  "description": "微信群聊每日精华总结 skill — 配套渲染脚本",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "render": "node scripts/render-image.mjs"
+  },
+  "dependencies": {
+    "marked": "^14.1.3",
+    "puppeteer-core": "^23.6.0",
+    "qrcode": "^1.5.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

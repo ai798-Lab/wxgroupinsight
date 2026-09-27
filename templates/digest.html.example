@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>{{group_name}} 群聊精华 · {{date}}</title>
+  <style>
+    /* 占位排版 — 之后让 Claude design 替换这一整段 <style>。
+       字段约定：见模板底部注释。 */
+    :root {
+      --bg: #f6f4ef;
+      --ink: #1a1a1a;
+      --muted: #6b6b6b;
+      --line: #e5e1d8;
+      --accent: #1f6feb;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+    .page {
+      width: 1080px;
+      padding: 80px 80px 60px;
+      background: var(--bg);
+    }
+    header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 28px;
+      margin-bottom: 36px;
+    }
+    .kicker {
+      font-size: 14px;
+      letter-spacing: 4px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    h1 {
+      font-size: 44px;
+      margin: 12px 0 16px;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+    .meta {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .meta b { color: var(--ink); font-weight: 600; }
+
+    article { font-size: 16px; }
+    article h1 {
+      font-size: 22px;
+      margin: 36px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+    article h2 {
+      font-size: 18px;
+      margin: 28px 0 10px;
+    }
+    article p { margin: 0 0 14px; }
+    article ul { padding-left: 20px; margin: 0 0 14px; }
+    article li { margin: 4px 0; }
+    article code {
+      background: #ece8df;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    article a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      word-break: break-all;
+    }
+    article blockquote {
+      border-left: 3px solid var(--line);
+      padding: 4px 14px;
+      margin: 14px 0;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 56px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .qr {
+      width: 160px;
+      height: 160px;
+      flex-shrink: 0;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .qr img { width: 100%; height: 100%; display: block; }
+    .qr-text { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .qr-text b { color: var(--ink); font-size: 15px; display: block; margin-bottom: 4px; }
+    .stamp {
+      margin-left: auto;
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="kicker">WeChat Group Digest</div>
+      <h1>{{group_name}} 群聊精华</h1>
+      <div class="meta">
+        <span><b>日期</b>　{{date}}</span>
+        <span><b>消息</b>　{{message_count}} 条</span>
+        <span><b>Top</b>　{{top}}</span>
+      </div>
+    </header>
+
+    <article>
+      {{body_html}}
+    </article>
+
+    <footer>
+      <div class="qr">
+        <img src="{{qr_data_url}}" alt="多维表格记录" />
+      </div>
+      <div class="qr-text">
+        <b>扫码查看完整记录</b>
+        飞书多维表格 · 收录全部历史<br />
+        简报、统计、Top 群友画像
+      </div>
+      <div class="stamp">
+        生成于 {{generated_at}}<br />
+        本简报由 AI 自动生成
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
+
+<!--
+  模板可用占位符（render-image.mjs 会替换）：
+    {{group_name}}      群名
+    {{date}}            日期或区间
+    {{message_count}}   消息总数
+    {{top}}             "蛙总 92 / 老王 58 / 阿喵 41"
+    {{body_html}}       简报 .md 转换后的 HTML 全文
+    {{qr_data_url}}     多维表格记录链接的二维码 (data:image/png;base64,...)
+    {{record_url}}      原始链接（一般不直接显示）
+    {{generated_at}}    生成时间，本机时区
+
+  替换之后整张页面会被截成 PNG，输出到 wechat/{group}/YYYY-MM-DD.png。
+  Chrome headless 渲染 width 默认 1080px，可在 render 命令传 --width 调整。
+
+  之后让 Claude design 重做这个模板时，保持以上占位符不变即可。
+-->

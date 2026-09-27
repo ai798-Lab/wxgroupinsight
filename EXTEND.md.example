@@ -1,0 +1,59 @@
+# wxgroupinsight 偏好配置
+#
+# 复制到下面任一位置，第一个匹配的生效：
+#   .wxgroupinsight/EXTEND.md                                    (项目级，最高优先级)
+#   ${XDG_CONFIG_HOME:-$HOME/.config}/wxgroupinsight/EXTEND.md   (XDG)
+#   $HOME/.wxgroupinsight/EXTEND.md                              (用户级)
+#
+# 格式：key: value 或 key=value，键大小写不敏感，# 开头是注释。
+
+# ─── 身份 ─────────────────────────────────────────────────────
+# 必填 — 自己的 wxid。
+# 怎么找：wx contacts --query "<自己昵称>" --json
+self_wxid: wxid_xxxxxxxxxxxx
+
+# 必填 — 简报里自己的显示名（如「辛一」）。
+self_display: 辛一
+
+# 可选 — 群里识别成自己的别名列表（个人微信名、群昵称等）。
+# wx 0.2.0 起 sender 字段是完整群昵称，但用户在不同群可能用不同名字，
+# 这里列举所有需要归一化为 self_display 的形式。
+# 例：
+# self_match: ["Sin", "辛一 - 北京 - 独立开发", "SOULSIN14"]
+
+# ─── 默认要总结的群（首次配置时 BLOCKING 询问）────────────────
+# 用户说「继续」「总结昨天的」这种不带群名的触发时，默认跑这里的群。
+# 第一项作为主默认；多个则用「全部 / 所有默认群」触发遍历。
+# 例：
+# default_groups:
+#   - ZOPC Builders 正式群
+#   - 客户对接群
+
+# ─── 范围 ─────────────────────────────────────────────────────
+# 用户没指定时间且无增量锚点时的默认范围。
+# 形如：24h（小时） / 7d（天） / 2026-05-14（指定单日）
+# default_time_range: 24h
+
+# 简报存放根目录。默认 {project_root}/wechat
+# data_root: ~/Documents/wechat-digests
+
+# ─── 发布到飞书 docx ──────────────────────────────────────────
+# 取值：
+#   none  只产 .md 不推送（默认）
+#   docx  写飞书云文档（含图片 inline）
+# publish: docx
+
+# 飞书企业域名前缀（URL 里 https://<这部分>.feishu.cn/...）
+# feishu_tenant: vcn5y6q5vxhe
+
+# wiki 链接里的 node_token（URL 里 /wiki/<这部分>）
+# 用 lark-cli wiki spaces get_node --params '{"token":"<wiki_token>"}' 解析出真实 doc token
+# feishu_wiki_token: <wiki_node_token>
+
+# wiki node 解析后的真实 docx token（obj_token），写入飞书时直接用这个
+# feishu_doc_token: <doc_obj_token>
+
+# ─── 历史方案（保留备用，当前不走）─────────────────────────────
+# 多维表格 schema 在 references/feishu-table-design.md
+# HTML 长图模板在 templates/digest.html.example
+# 这两个保留备用，明确启用时再填配置项。
